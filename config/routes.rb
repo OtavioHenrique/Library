@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  api_version(:module => "V1", :path => {:value => "v1"}) do
+  constraints subdomain: 'api' do
+    api_version(:module => "V1", :path => {:value => "v1"}) do
+      resources :books
+    end
   end
-  namespace :api, defaults: { format: :json  }, constraints: { subdomain: "api" }, path: "/" do
-  end  
 end
