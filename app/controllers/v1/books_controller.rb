@@ -22,6 +22,22 @@ class V1::BooksController < ApplicationController
     end
   end
 
+  def update
+    book = Book.find(params[:id])
+
+    if book.update(book_params)
+      render json: book, status: :ok
+    else
+      render json: { errors: book.errors }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    book = Book.find(params[:id])
+    book.destroy
+    head 204
+  end
+
   private
   
   def book_params
