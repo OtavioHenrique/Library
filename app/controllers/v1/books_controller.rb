@@ -5,6 +5,12 @@ class V1::BooksController < ApplicationController
     books = Book.all
     render json: books, status: :ok
   end
+  
+  def show
+    book = Book.find(params[:id])
+
+    render json: book, status: :ok
+  end
 
   def create
     book = Book.new(book_params)
