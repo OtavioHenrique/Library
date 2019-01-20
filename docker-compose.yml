@@ -9,6 +9,23 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     volumes:
       - mysql-db:/var/lib/mysql
+  grafana:
+    image: grafana/grafana:5.2.4
+    network_mode: host
+    user: "472"
+    depends_on:
+      - prometheus
+    ports:
+      - 3000:3000/tcp
+  prometheus:
+    network_mode: host
+    image: prom/prometheus:v2.4.3
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090/tcp
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
 
 volumes:
   mysql-db:
