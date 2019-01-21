@@ -5,7 +5,7 @@ class V1::BooksController < ApplicationController
     books = Book.all
     render json: books, status: :ok
   end
-  
+
   def show
     book = Book.find(params[:id])
 
@@ -16,6 +16,8 @@ class V1::BooksController < ApplicationController
     book = Book.new(book_params)
 
     if book.save
+      Yabeda.books_created.increment(kind: "success")
+
       render json: book, status: :created
     else
       render json: { errors: book.errors }, status: :unprocessable_entity
